@@ -1,0 +1,38 @@
+<mat-card class="center" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Simple Loan Calculator</mat-card-title>
+    <mat-card-subtitle>Computes <b>EMI</b> (Equated Monthly Installment)</mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content class="card-content">
+    <div [formGroup]="loanCalculatorForm">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Loan amount</mat-label>
+        <input matInput type="number" formControlName="principalAmountUSD">
+        <span matTextSuffix>$&nbsp;</span>
+        <mat-error *ngIf="loanCalculatorForm.controls.principalAmountUSD.invalid">{{getErrorMessage(loanCalculatorForm.controls.principalAmountUSD)}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Interest rate</mat-label>
+        <input matInput type="number" formControlName="interestPerc">
+        <span matTextSuffix>%&nbsp;</span>
+        <mat-error *ngIf="loanCalculatorForm.controls.interestPerc.invalid">{{getErrorMessage(loanCalculatorForm.controls.interestPerc)}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Loan tenure (months)</mat-label>
+        <input matInput type="number" formControlName="tenureMonths">
+        <mat-error *ngIf="loanCalculatorForm.controls.tenureMonths.invalid">{{getErrorMessage(loanCalculatorForm.controls.tenureMonths)}}</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-list role="list">
+      <mat-list-item role="listitem">Loan EMI: {{ emi | currency:'USD' }}</mat-list-item>
+      <mat-list-item role="listitem">Total Interest Payable: {{ totalInterest | currency:'USD' }}</mat-list-item>
+      <mat-list-item role="listitem">Total Payment (Principal + Interest): {{ totalPayment | currency:'USD'}}</mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions align="end">
+    <button mat-stroked-button color="primary" class="card-btn" (click)="submitLoanForm()">COMPUTE</button>
+    <button mat-stroked-button class="card-btn" (click)="clearLoanForm()">CLEAR</button>
+  </mat-card-actions>
+</mat-card>
